@@ -18,7 +18,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     float showRating(@Param("restaurant") String restaurant);
 
     @Query(
-            value = "SELECT CONCAT(res, ' - ', rat) FROM( SELECT c.restaurant as res, ROUND(AVG(rating), 2) as rat FROM comment c GROUP BY c.restaurant ORDER BY rat DESC LIMIT 5)",
+            value = "SELECT CONCAT(res, ' - ', rat) FROM( SELECT c.restaurant as res, ROUND(AVG(rating), 2) as rat FROM comment c GROUP BY c.restaurant ORDER BY rat DESC LIMIT 5) as query",
             nativeQuery = true
     )
     List<String> top();

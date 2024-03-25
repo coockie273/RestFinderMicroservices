@@ -24,6 +24,12 @@ SET default_table_access_method = heap;
 -- Name: restaurant; Type: TABLE; Schema: public; Owner: postgres
 --
 
+CREATE DATABASE restaurants;
+
+\c restaurants;
+
+CREATE USER _dbusername_ WITH ENCRYPTED PASSWORD _dbpassword_ SUPERUSER;
+
 CREATE TABLE public.restaurant (
     id integer NOT NULL,
     name text,

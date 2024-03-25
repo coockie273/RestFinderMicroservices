@@ -24,6 +24,12 @@ SET default_table_access_method = heap;
 -- Name: comment; Type: TABLE; Schema: public; Owner: postgres
 --
 
+CREATE DATABASE comments;
+
+/c comments;
+
+CREATE USER _dbusername_ WITH ENCRYPTED PASSWORD _dbpassword_ SUPERUSER;
+
 CREATE TABLE public.comment (
     id integer NOT NULL,
     username text,
@@ -73,7 +79,7 @@ COPY public.comment (id, username, restaurant, content, rating) FROM stdin;
 2	molodoy_na_volge	The Rustic Table	Very bad restaurant	1
 3	molodoy_na_volge	Thai Orchid Garden	Nice restaurant	4
 5	stas	Thai Orchid Garden	Nothing special	3
-6	stas	The Jopa	ќв® ­Ґ аҐбв®а ­, нв® ¦®Ї 	\N
+6	stas	The Jopa	ќв® Ґ аҐбв®а , нв® ¦®Ї 	\N
 \.
 
 
@@ -103,4 +109,3 @@ ALTER TABLE ONLY public.comment
 --
 -- PostgreSQL database dump complete
 --
-
