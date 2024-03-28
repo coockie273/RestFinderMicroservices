@@ -9,11 +9,11 @@ services:
     ports:
       - "8080:8080"
 
-  user_db:
+  db_service:
     build:
-      context: UserService/database
+      context: database
       dockerfile: Dockerfile
-    container_name: user_db
+    container_name: db_service
     ports:
       - "5432:5432"
     environment:
@@ -29,22 +29,10 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://user_db:5432/users
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_service:5432/users
       SPRING_DATASOURCE_USERNAME: users_user
       SPRING_DATASOURCE_PASSWORD: users_user
 
-  restaurant_db:
-    build:
-      context: RestaurantService/database
-      dockerfile: Dockerfile
-    container_name: restaurant_db
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      
   restaurant_service:
     build:
       context: RestaurantService
@@ -53,23 +41,10 @@ services:
     ports:
       - "8082:8082"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://restaurant_db:5432/restaurants
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_service:5432/restaurants
       SPRING_DATASOURCE_USERNAME: restaurants_user
       SPRING_DATASOURCE_PASSWORD: restaurants_user
 
-
-  rating_db:
-    build:
-      context: RatingService/database
-      dockerfile: Dockerfile
-    container_name: rating_db
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      
   rating_service:
     build:
       context: RatingService
@@ -87,3 +62,4 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+

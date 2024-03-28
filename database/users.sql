@@ -126,3 +126,4 @@ ALTER TABLE ONLY public.user_restaurant
 -- PostgreSQL database dump complete
 --
 
+
