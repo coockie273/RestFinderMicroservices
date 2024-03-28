@@ -8,6 +8,10 @@ services:
     container_name: gateway_api
     ports:
       - "8080:8080"
+    environment:
+      SERVICE_USERS_HOST: http://user_service:8081
+      SERVICE_RESTAURANTS_HOST: http://user_service:8082
+      SERVICE_RATING_HOST: http://user_service:8083
 
   db_service:
     build:
