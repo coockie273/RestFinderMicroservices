@@ -28,7 +28,7 @@ public class RestaurantFinderBot extends TelegramLongPollingBot {
 
 
     // From vault
-    public RestaurantFinderBot(@Value("${bot.token}" String botToken)) {
+    public RestaurantFinderBot(@Value("${bot.token}") String botToken) {
         super(botToken);
     }
 
