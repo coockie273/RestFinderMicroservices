@@ -17,13 +17,13 @@ import java.util.Map;
 @Component
 public class RestaurantFinderBot extends TelegramLongPollingBot {
 
-    @Value("${service.userhost}")
-    private final String UserAPI = "http://localhost:8081/";
+    @Value("${SERVICE_USERS_HOST}")
+    private final String UserAPI;
 
-    @Value("${service.restaurnthost}")
+    @Value("${SERVICE_RESTAURANTS_HOST}")
     private final String RestaurantAPI;
 
-    @Value("${service.raatinghost}")
+    @Value("${SERVICE_RATING_HOST}")
     private final String RatingAPI;
 
 

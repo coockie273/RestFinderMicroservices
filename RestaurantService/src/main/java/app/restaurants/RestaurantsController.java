@@ -6,16 +6,26 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.JedisPooled;
 
 @RestController
 public class RestaurantsController {
     @Autowired
     RestaurantRepository restaurantRepository;
+
+    @Value("${service.jedishost}")
+    String jedisHost;
+
+    JedisPooled jedis = new JedisPooled(jedisHost, 6379);
 
     public RestaurantsController() {
     }
@@ -40,10 +50,30 @@ public class RestaurantsController {
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
+    Integer[] cachedMinMax(){
+        int ttl = 600;
+        ObjectMapper objectMapper = new ObjectMapper();
+        String raw = jedis.get("min_max");
+        if (raw != null) {
+            try {
+                return objectMapper.readValue(raw, Integer[].class);
+            } catch (JsonProcessingException e) {
+                return null;
+            }
+        }
+        Integer[] minMax = (Integer[])this.restaurantRepository.minMax().get(0);
+        try {
+            jedis.setex("min_max", ttl, objectMapper.writeValueAsString(minMax));
+            return minMax;
+        } catch (JsonProcessingException e) {
+            return null;
+        }
+    }
+
     @PostMapping({"/randomRestaurant"})
     ResponseEntity<Map<String, Object>> randomRestaurant() {
-        Object[] minMax = (Object[])this.restaurantRepository.minMax().get(0);
-        int randomIndex = (new Random()).nextInt((Integer)minMax[1] - (Integer)minMax[0] + 1) + (Integer)minMax[0];
+        Integer[] minMax = cachedMinMax();
+        int randomIndex = (new Random()).nextInt((minMax[1] - minMax[0] + 1) + minMax[0]);
         String restaurant = this.restaurantRepository.randomRestaurant(randomIndex);
         Map responseBody;
         if (restaurant != null) {
