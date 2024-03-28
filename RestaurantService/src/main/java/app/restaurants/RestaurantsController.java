@@ -22,10 +22,9 @@ public class RestaurantsController {
     @Autowired
     RestaurantRepository restaurantRepository;
 
-    @Value("${service.jedishost}")
     String jedisHost;
 
-    JedisPooled jedis = new JedisPooled(jedisHost, 6379);
+    JedisPooled jedis = new JedisPooled("redis", 6379);
 
     public RestaurantsController() {
     }

@@ -28,7 +28,7 @@ CREATE DATABASE users;
 
 \c users;
 
-CREATE USER _dbusername_ WITH ENCRYPTED PASSWORD _dbpassword_ SUPERUSER;
+CREATE USER users_user WITH ENCRYPTED PASSWORD 'users_user' SUPERUSER;
 
 CREATE TABLE public.restaurant (
     id integer NOT NULL,

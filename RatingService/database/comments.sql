@@ -28,7 +28,7 @@ CREATE DATABASE comments;
 
 /c comments;
 
-CREATE USER _dbusername_ WITH ENCRYPTED PASSWORD _dbpassword_ SUPERUSER;
+CREATE USER rating_user WITH ENCRYPTED PASSWORD 'rating_user' SUPERUSER;
 
 CREATE TABLE public.comment (
     id integer NOT NULL,

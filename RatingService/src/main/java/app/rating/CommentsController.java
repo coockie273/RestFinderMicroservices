@@ -19,10 +19,7 @@ public class CommentsController {
     @Autowired
     CommentRepository commentRepository;
 
-    @Value("${service.jedishost}")
-    String jedisHost;
-
-    JedisPooled jedis = new JedisPooled(jedisHost, 6379);
+    JedisPooled jedis = new JedisPooled("redis", 6379);
 
     public CommentsController() {
     }

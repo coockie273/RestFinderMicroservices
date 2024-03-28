@@ -1,0 +1,89 @@
+version: "3.9"
+services:
+
+  gateway_api:
+    build:
+      context: GatewayAPI
+      dockerfile: Dockerfile
+    container_name: gateway_api
+    ports:
+      - "8080:8080"
+
+  user_db:
+    build:
+      context: UserService/database
+      dockerfile: Dockerfile
+    container_name: user_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+
+  user_service:
+    build:
+      context: UserService
+      dockerfile: Dockerfile
+    container_name: user_service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user_db:5432/users
+      SPRING_DATASOURCE_USERNAME: users_user
+      SPRING_DATASOURCE_PASSWORD: users_user
+
+  restaurant_db:
+    build:
+      context: RestaurantService/database
+      dockerfile: Dockerfile
+    container_name: restaurant_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      
+  restaurant_service:
+    build:
+      context: RestaurantService
+      dockerfile: Dockerfile
+    container_name: restaurant_service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://restaurant_db:5432/restaurants
+      SPRING_DATASOURCE_USERNAME: restaurants_user
+      SPRING_DATASOURCE_PASSWORD: restaurants_user
+
+
+  rating_db:
+    build:
+      context: RatingService/database
+      dockerfile: Dockerfile
+    container_name: rating_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      
+  rating_service:
+    build:
+      context: RatingService
+      dockerfile: Dockerfile
+    container_name: rating_service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://rating_db:5432/comments
+      SPRING_DATASOURCE_USERNAME: rating_user
+      SPRING_DATASOURCE_PASSWORD: _dbpassword
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"

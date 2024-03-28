@@ -1,5 +1,5 @@
 FROM postgres:latest
 
-COPY comments.sql /docker-entrypoint-initdb.d/
+COPY users.sql /docker-entrypoint-initdb.d/
 
 VOLUME /var/lib/postgresql/data
