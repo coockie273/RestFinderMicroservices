@@ -28,7 +28,7 @@ CREATE DATABASE restaurants;
 
 \c restaurants;
 
-CREATE USER restaurants_user WITH ENCRYPTED PASSWORD 'restaurants_user' SUPERUSER;
+CREATE USER _restaurants_user WITH ENCRYPTED PASSWORD _restaurants_user SUPERUSER;
 
 CREATE TABLE public.restaurant (
     id integer NOT NULL,
