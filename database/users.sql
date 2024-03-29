@@ -24,20 +24,7 @@ SET default_table_access_method = heap;
 -- Name: restaurant; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE DATABASE users;
-
 \c users;
-
-CREATE USER _users_user WITH ENCRYPTED PASSWORD _users_user_pwd SUPERUSER;
-
-CREATE TABLE public.restaurant (
-    id integer NOT NULL,
-    description character varying(255),
-    name character varying(255)
-);
-
-
-ALTER TABLE public.restaurant OWNER TO postgres;
 
 --
 -- Name: telegram_user; Type: TABLE; Schema: public; Owner: postgres
@@ -66,14 +53,6 @@ CREATE TABLE public.user_restaurant (
 ALTER TABLE public.user_restaurant OWNER TO postgres;
 
 --
--- Data for Name: restaurant; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.restaurant (id, description, name) FROM stdin;
-\.
-
-
---
 -- Data for Name: telegram_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -88,15 +67,6 @@ COPY public.telegram_user (id, username, description, name) FROM stdin;
 
 COPY public.user_restaurant (user_id, restaurant) FROM stdin;
 \.
-
-
---
--- Name: restaurant restaurant_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.restaurant
-    ADD CONSTRAINT restaurant_pkey PRIMARY KEY (id);
-
 
 --
 -- Name: telegram_user telegram_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
