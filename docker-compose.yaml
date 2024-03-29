@@ -36,7 +36,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/users
       SPRING_DATASOURCE_USERNAME: _users_user
-      SPRING_DATASOURCE_PASSWORD: _users_user
+      SPRING_DATASOURCE_PASSWORD: _users_user_pwd
 
   restaurant:
     build:
@@ -48,7 +48,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/restaurants
       SPRING_DATASOURCE_USERNAME: _restaurants_user
-      SPRING_DATASOURCE_PASSWORD: _restaurants_user
+      SPRING_DATASOURCE_PASSWORD: _restaurants_user_pwd
 
   rating:
     build:
@@ -60,7 +60,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/comments
       SPRING_DATASOURCE_USERNAME: _rating_user
-      SPRING_DATASOURCE_PASSWORD: _rating_user
+      SPRING_DATASOURCE_PASSWORD: _rating_user_pwd
 
   redis:
     image: redis:latest
