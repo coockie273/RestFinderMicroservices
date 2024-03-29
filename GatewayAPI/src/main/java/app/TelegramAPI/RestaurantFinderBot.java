@@ -27,6 +27,8 @@ public class RestaurantFinderBot extends TelegramLongPollingBot {
     private String RatingAPI;
 
     public RestaurantFinderBot(@Value("${BOT_TOKEN}") String botToken) {
+        super(botToken);
+    }
 
     @Override
     public String getBotUsername() {
