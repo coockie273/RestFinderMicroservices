@@ -28,7 +28,7 @@ CREATE DATABASE comments;
 
 \c comments;
 
-CREATE USER _rating_user WITH ENCRYPTED PASSWORD _rating_user SUPERUSER;
+CREATE USER _rating_user WITH ENCRYPTED PASSWORD _rating_user_pwd SUPERUSER;
 
 CREATE TABLE public.comment (
     id integer NOT NULL,
