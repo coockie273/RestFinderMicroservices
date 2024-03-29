@@ -9,11 +9,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SERVICE_USERS_HOST: http://user_service:8081
-      SERVICE_RESTAURANTS_HOST: http://user_service:8082
-      SERVICE_RATING_HOST: http://user_service:8083
+      SERVICE_USERS_HOST: http://user:8081
+      SERVICE_RESTAURANTS_HOST: http://restaurant:8082
+      SERVICE_RATING_HOST: http://rating:8083
+      BOT_TOKEN: 6458168079:AAGfUZdMzq963ppML1HKCZ-zBmsGRaell6A
 
-  db_service:
+  dbservice:
     build:
       context: database
       dockerfile: Dockerfile
@@ -25,7 +26,7 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
 
-  user_service:
+  user:
     build:
       context: UserService
       dockerfile: Dockerfile
@@ -33,11 +34,11 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db_service:5432/users
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/users
       SPRING_DATASOURCE_USERNAME: users_user
       SPRING_DATASOURCE_PASSWORD: users_user
 
-  restaurant_service:
+  restaurant:
     build:
       context: RestaurantService
       dockerfile: Dockerfile
@@ -45,11 +46,11 @@ services:
     ports:
       - "8082:8082"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db_service:5432/restaurants
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/restaurants
       SPRING_DATASOURCE_USERNAME: restaurants_user
       SPRING_DATASOURCE_PASSWORD: restaurants_user
 
-  rating_service:
+  rating:
     build:
       context: RatingService
       dockerfile: Dockerfile
@@ -57,9 +58,9 @@ services:
     ports:
       - "8083:8083"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://rating_db:5432/comments
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/comments
       SPRING_DATASOURCE_USERNAME: rating_user
-      SPRING_DATASOURCE_PASSWORD: _dbpassword
+      SPRING_DATASOURCE_PASSWORD: rating_user
 
   redis:
     image: redis:latest

@@ -26,7 +26,7 @@ SET default_table_access_method = heap;
 
 CREATE DATABASE comments;
 
-/c comments;
+\c comments;
 
 CREATE USER rating_user WITH ENCRYPTED PASSWORD 'rating_user' SUPERUSER;
 

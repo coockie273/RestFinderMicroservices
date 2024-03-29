@@ -18,17 +18,15 @@ import java.util.Map;
 public class RestaurantFinderBot extends TelegramLongPollingBot {
 
     @Value("${SERVICE_USERS_HOST}")
-    private final String UserAPI;
+    private String UserAPI;
 
     @Value("${SERVICE_RESTAURANTS_HOST}")
-    private final String RestaurantAPI;
+    private String RestaurantAPI;
 
     @Value("${SERVICE_RATING_HOST}")
-    private final String RatingAPI;
+    private String RatingAPI;
 
-
-    // From vault
-    public RestaurantFinderBot(@Value("${bot.token}" String botToken)) {
+    public RestaurantFinderBot(@Value("${BOT_TOKEN}") String botToken) {
         super(botToken);
     }
 
