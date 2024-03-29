@@ -1,20 +1,20 @@
 
 -- Create databases and user for each database.
 
-CREATE USER rating_uname WITH PASSWORD 'rating_uname_pwd';
+CREATE USER _rating_user WITH PASSWORD '_rating_user_pwd';
 CREATE DATABASE comments;
 \c comments;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO rating_uname;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO rating_uname;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO _rating_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO _rating_user;
 
-CREATE USER rest_uname WITH PASSWORD 'rest_uname_pwd';
+CREATE USER _restaurants_user WITH PASSWORD '_restaurants_user_pwd';
 CREATE DATABASE restaurants;
 \c restaurants;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO rest_uname;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO rest_uname;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO _restaurants_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO _restaurants_user;
 
-CREATE USER users_uname WITH PASSWORD 'users_uname_pwd';
+CREATE USER _users_user WITH PASSWORD '_users_user';
 CREATE DATABASE users;
 \c users;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO users_uname;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO users_uname;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO _users_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO _users_user;
