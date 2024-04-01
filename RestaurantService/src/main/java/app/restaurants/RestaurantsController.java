@@ -72,7 +72,7 @@ public class RestaurantsController {
     String getCachedRestaurantInfo(int index) {
         int ttl = 600;
 
-        String raw = jedis.get(index);
+        String raw = jedis.get(index.toString());
         if (raw != null) {
             return raw;
         }
