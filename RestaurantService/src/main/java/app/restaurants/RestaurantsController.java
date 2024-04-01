@@ -49,18 +49,18 @@ public class RestaurantsController {
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
-    Integer[] cachedMinMax(){
+    Object[] cachedMinMax(){
         int ttl = 600;
         ObjectMapper objectMapper = new ObjectMapper();
         String raw = jedis.get("min_max");
         if (raw != null) {
             try {
-                return objectMapper.readValue(raw, Integer[].class);
+                return objectMapper.readValue(raw, Object[].class);
             } catch (JsonProcessingException e) {
                 return null;
             }
         }
-        Integer[] minMax = (Integer[])this.restaurantRepository.minMax().get(0);
+        Object[] minMax = (Object[])this.restaurantRepository.minMax().get(0);
         try {
             jedis.setex("min_max", ttl, objectMapper.writeValueAsString(minMax));
             return minMax;
@@ -69,11 +69,23 @@ public class RestaurantsController {
         }
     }
 
+    String getCachedRestaurantInfo(int index) {
+        int ttl = 600;
+
+        String raw = jedis.get(index);
+        if (raw != null) {
+            return raw;
+        }
+        String restInfo = this.restaurantRepository.randomRestaurant(index);
+        jedis.setex(index.toString(), ttl, restInfo);
+        return restInfo;
+    }
+
     @PostMapping({"/randomRestaurant"})
     ResponseEntity<Map<String, Object>> randomRestaurant() {
-        Integer[] minMax = cachedMinMax();
-        int randomIndex = (new Random()).nextInt((minMax[1] - minMax[0] + 1) + minMax[0]);
-        String restaurant = this.restaurantRepository.randomRestaurant(randomIndex);
+        Object[] minMax = cachedMinMax();
+        int randomIndex = (new Random()).nextInt((Integer)minMax[1] - (Integer)minMax[0] + 1) + (Integer)minMax[0];
+        String restaurant = getCachedRestaurantInfo(randomIndex);
         Map responseBody;
         if (restaurant != null) {
             responseBody = Map.of("code", 1, "body", restaurant);

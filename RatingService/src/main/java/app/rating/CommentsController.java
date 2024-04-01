@@ -63,7 +63,7 @@ public class CommentsController {
 
         try {
             float rating = getCachedRating(restaurant);
-            responseBody = Map.of("code", 0, "body", rating);
+            responseBody = Map.of("code", 1, "body", rating);
         } catch (NullPointerException n) {
             responseBody = Map.of("code", 0, "type", 1);
         }
