@@ -72,12 +72,12 @@ public class RestaurantsController {
     String getCachedRestaurantInfo(int index) {
         int ttl = 600;
 
-        String raw = jedis.get(index.toString());
+        String raw = jedis.get(String.valueOf(index));
         if (raw != null) {
             return raw;
         }
         String restInfo = this.restaurantRepository.randomRestaurant(index);
-        jedis.setex(index.toString(), ttl, restInfo);
+        jedis.setex(String.valueOf(index), ttl, restInfo);
         return restInfo;
     }
 
