@@ -32,87 +32,19 @@
 - name: Modify properties of the db
   hosts: localhost
   tasks:
-    - name: Modify users db username
-      replace:
-        path: "{{ sql_init_file }}"
-        regexp: "_users_user"
-        replace: "{{ db.secret.users_user}}"
-
-    - name: Modify users db password
-      replace:
-        path: "{{ sql_init_file }}"
-        regexp: "_users_user_pwd"
-        replace: "{{ db.secret.users_user_pwd }}"
-
-    - name: Modify restaurants db username
-      replace:
-        path: "{{ sql_init_file }}"
-        regexp: "_restaurants_user"
-        replace: "{{ db.secret.restaurants_user}}"
-
-    - name: Modify restaurants db password
-      replace:
-        path: "{{ sql_init_file }}"
-        regexp: "_restaurants_user_pwd"
-        replace: "{{ db.secret.restaurants_user_pwd }}"
-
-    - name: Modify rating db username
-      replace:
-        path: "{{ sql_init_file }}"
-        regexp: "_rating_user"
-        replace: "{{ db.secret.rating_user}}"
-
-    - name: Modify users db password
-      replace:
-        path: "{{ sql_init_file }}"
-        regexp: "_users_user_pwd"
-        replace: "{{ db.secret.rating_user_pwd }}"
+    - name: Modify sql init file from template
+      ansible.builtin.template:
+        src: "{{ sql_init_file }}"
+        dest: "{{ sql_init_file | regex_replace('\.j2$', '.sql') }}"
 
 
 - name: Modify properties of the services
   hosts: localhost
   tasks:
-    - name: Modify db username
-      replace:
-        path: "{{ compose_file }}"
-        regexp: "_token"
-        replace: "{{ bot.secret.token}}"
-
-    - name: Modify users db username
-      replace:
-        path: "{{ compose_file }}"
-        regexp: "_users_user"
-        replace: "{{ db.secret.users_user}}"
-
-    - name: Modify users db password
-      replace:
-        path: "{{ compose_file }}"
-        regexp: "_users_user_pwd"
-        replace: "{{ db.secret.users_user_pwd }}"
-
-    - name: Modify restaurants db username
-      replace:
-        path: "{{ compose_file }}"
-        regexp: "_restaurants_user"
-        replace: "{{ db.secret.restaurants_user}}"
-
-    - name: Modify restaurants db password
-      replace:
-        path: "{{ compose_file }}"
-        regexp: "_restaurants_user_pwd"
-        replace: "{{ db.secret.restaurants_user_pwd }}"
-
-    - name: Modify rating db username
-      replace:
-        path: "{{ compose_file }}"
-        regexp: "_rating_user"
-        replace: "{{ db.secret.rating_user}}"
-
-    - name: Modify users db password
-      replace:
-        path: "{{ compose_file }}"
-        regexp: "_users_user_pwd"
-        replace: "{{ db.secret.rating_user_pwd }}"
+    - name: Modify sql init file from template
+      ansible.builtin.template:
+        src: "{{ compose_file }}"
+        dest: "{{ compose_file | regex_replace('\.j2$', '.yaml') }}"
 
 - name: Wait timeout for creating instances
   hosts: localhost
