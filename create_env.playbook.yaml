@@ -32,7 +32,7 @@
 - name: Modify properties of the db
   hosts: localhost
   tasks:
-    - name: Modify sql init file from template
+    - name: Modify unit file from template
       ansible.builtin.template:
         src: "{{ sql_init_file }}"
         dest: "{{ sql_init_file | regex_replace('j2$', 'sql') }}"
