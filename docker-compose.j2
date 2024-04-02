@@ -12,7 +12,7 @@ services:
       SERVICE_USERS_HOST: http://user:8081
       SERVICE_RESTAURANTS_HOST: http://restaurant:8082
       SERVICE_RATING_HOST: http://rating:8083
-      BOT_TOKEN: _token
+      BOT_TOKEN: {{ bot.secret.token}}
 
   dbservice:
     build:
@@ -35,8 +35,8 @@ services:
       - "8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/users
-      SPRING_DATASOURCE_USERNAME: _users_user
-      SPRING_DATASOURCE_PASSWORD: _users_user_pwd
+      SPRING_DATASOURCE_USERNAME: {{ db.secret.users_user}}
+      SPRING_DATASOURCE_PASSWORD: {{ db.secret.users_user_pwd }}
 
   restaurant:
     build:
@@ -47,8 +47,8 @@ services:
       - "8082:8082"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/restaurants
-      SPRING_DATASOURCE_USERNAME: _restaurants_user
-      SPRING_DATASOURCE_PASSWORD: _restaurants_user_pwd
+      SPRING_DATASOURCE_USERNAME: {{ db.secret.restaurants_user}}"
+      SPRING_DATASOURCE_PASSWORD: {{ db.secret.restaurants_user_pwd }}
 
   rating:
     build:
@@ -59,8 +59,8 @@ services:
       - "8083:8083"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/comments
-      SPRING_DATASOURCE_USERNAME: _rating_user
-      SPRING_DATASOURCE_PASSWORD: _rating_user_pwd
+      SPRING_DATASOURCE_USERNAME: {{ db.secret.rating_user}}
+      SPRING_DATASOURCE_PASSWORD: {{ db.secret.rating_user_pwd }}
 
   redis:
     image: redis:latest
