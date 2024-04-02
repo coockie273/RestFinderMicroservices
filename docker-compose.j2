@@ -47,7 +47,7 @@ services:
       - "8082:8082"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/restaurants
-      SPRING_DATASOURCE_USERNAME: {{ db.secret.restaurants_user}}"
+      SPRING_DATASOURCE_USERNAME: {{ db.secret.restaurants_user}}
       SPRING_DATASOURCE_PASSWORD: {{ db.secret.restaurants_user_pwd }}
 
   rating:
