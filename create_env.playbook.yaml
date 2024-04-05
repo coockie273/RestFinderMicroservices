@@ -85,7 +85,7 @@
     - name: Copy directory project
       copy:
         src: "{{ compose_yaml }}"
-        dest: /home/ubuntu/project
+        dest: /home/ubuntu/project/
 
     - name: Start docker containers
       docker_compose:
