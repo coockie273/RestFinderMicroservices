@@ -5,3 +5,4 @@
       ansible.builtin.template:
         src: "{{ sql_init_file }}"
         dest: "{{ sql_init_file | regex_replace('j2$', 'sql') }}"
+        
