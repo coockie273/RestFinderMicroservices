@@ -50,6 +50,8 @@
 - hosts: docker_server
   name: Deploy application with docker
   become: yes
+  vars:
+    compose_yaml: "{{ compose_file | regex_replace('j2$', 'yaml') }}"
   tasks:
     - name: Update apt package cache
       apt:
@@ -82,9 +84,9 @@
 
     - name: Copy directory project
       copy:
-        src: "{{ project_path }}"
-        dest: /home/ubuntu/
+        src: "{{ compose_yaml }}"
+        dest: /home/ubuntu
 
     - name: Start docker containers
       docker_compose:
-        project_src: "{{ project_path }}"
+        project_src: "{{ compose_yaml }}"
