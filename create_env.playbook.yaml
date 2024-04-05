@@ -94,7 +94,8 @@
         dest: /etc/docker
 
     - name: Restart Docker service
-      community.docker.docker_service:
+      ansible.builtin.service:
+        name: docker
         state: restarted
 
     - name: Ensure the project directory exists
