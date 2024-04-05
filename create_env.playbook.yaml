@@ -93,10 +93,15 @@
         src: "{{ daemon_json }}"
         dest: /etc/docker
 
+    - name: Ensure the project directory exists
+      ansible.builtin.file:
+        path: /home/ubuntu/project  
+        state: directory
+
     - name: Copy directory project
       copy:
         src: "{{ compose_yaml }}"
-        dest: /home/ubuntu/project/
+        dest: /home/ubuntu/project
 
     - name: Start docker containers
       docker_compose:
