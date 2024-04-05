@@ -32,12 +32,12 @@
 - name: Modify properties of the db
   hosts: localhost
   tasks:
-    - name: Modify sql init file from template
+    - name: Modify compose file from template
       ansible.builtin.template:
         src: "{{ compose_file }}"
         dest: "{{ compose_file | regex_replace('j2$', 'yaml') }}"
 
-    - name: Modify sql init file from template
+    - name: Modify docker conf from template
       ansible.builtin.template:
         src: "{{ daemon_conf }}"
         dest: "{{ daemon_conf | regex_replace('j2$', 'json') }}"
