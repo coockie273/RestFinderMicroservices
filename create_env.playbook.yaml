@@ -93,6 +93,10 @@
         src: "{{ daemon_json }}"
         dest: /etc/docker
 
+    - name: Restart Docker service
+      community.docker.docker_service:
+        state: restarted
+
     - name: Ensure the project directory exists
       ansible.builtin.file:
         path: /home/ubuntu/project  
