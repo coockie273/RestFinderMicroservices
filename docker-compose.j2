@@ -33,6 +33,8 @@ services:
     container_name: user_service
     ports:
       - "8081:8081"
+    depends_on:
+      - dbservice
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/users
       SPRING_DATASOURCE_USERNAME: {{ db.secret.users_user}}
@@ -45,6 +47,8 @@ services:
     container_name: restaurant_service
     ports:
       - "8082:8082"
+    depends_on:
+      - dbservice
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/restaurants
       SPRING_DATASOURCE_USERNAME: {{ db.secret.restaurants_user}}
@@ -57,6 +61,8 @@ services:
     container_name: rating_service
     ports:
       - "8083:8083"
+    depends_on:
+      - dbservice
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/comments
       SPRING_DATASOURCE_USERNAME: {{ db.secret.rating_user}}
