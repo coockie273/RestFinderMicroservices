@@ -37,15 +37,6 @@
         src: "{{ sql_init_file }}"
         dest: "{{ sql_init_file | regex_replace('j2$', 'sql') }}"
 
-
-- name: Modify properties of the services
-  hosts: localhost
-  tasks:
-    - name: Modify sql init file from template
-      ansible.builtin.template:
-        src: "{{  compose_file }}"
-        dest: "{{ compose_file | regex_replace('j2$', 'yaml') }}"
-
 - name: Wait timeout for creating instances
   hosts: localhost
   connection: local
