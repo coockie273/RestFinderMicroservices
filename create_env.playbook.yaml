@@ -105,4 +105,4 @@
 
     - name: Start docker containers
       docker_compose:
-        project_src: project/"{{ compose_yaml }}"
+        project_src: project/
