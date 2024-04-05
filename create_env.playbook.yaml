@@ -34,8 +34,8 @@
   tasks:
     - name: Modify sql init file from template
       ansible.builtin.template:
-        src: "{{ sql_init_file }}"
-        dest: "{{ sql_init_file | regex_replace('j2$', 'sql') }}"
+        src: "{{ compose_file }}"
+        dest: "{{ compose_file | regex_replace('j2$', 'yaml') }}"
 
 - name: Wait timeout for creating instances
   hosts: localhost
