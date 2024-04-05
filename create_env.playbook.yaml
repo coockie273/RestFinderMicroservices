@@ -43,7 +43,7 @@
   tasks:
     - name: Modify sql init file from template
       ansible.builtin.template:
-        src: "{{ compose_file }}"
+        src: "{{  compose_file }}"
         dest: "{{ compose_file | regex_replace('j2$', 'yaml') }}"
 
 - name: Wait timeout for creating instances
