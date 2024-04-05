@@ -5,40 +5,24 @@ services:
     build:
       context: GatewayAPI
       dockerfile: Dockerfile
-    container_name: gateway_api
-    ports:
-      - "8080:8080"
     image: localhost:5001/rest_finder/gateway_api
     
   dbservice:
     build:
       context: database
       dockerfile: Dockerfile
-    container_name: db_service
-    ports:
-      - "5432:5432"
     image: localhost:5001/rest_finder/dbservice
 
   user:
     build:
       context: UserService
       dockerfile: Dockerfile
-    container_name: user_service
-    ports:
-      - "8081:8081"
-    depends_on:
-      - dbservice
     image: localhost:5001/rest_finder/user
 
   restaurant:
     build:
       context: RestaurantService
       dockerfile: Dockerfile
-    container_name: restaurant_service
-    ports:
-      - "8082:8082"
-    depends_on:
-      - dbservice
     image: localhost:5001/rest_finder/restaurant
 
   rating:
@@ -46,8 +30,4 @@ services:
       context: RatingService
       dockerfile: Dockerfile
     container_name: rating_service
-    ports:
-      - "8083:8083"
-    depends_on:
-      - dbservice
     image: localhost:5001/rest_finder/rating
