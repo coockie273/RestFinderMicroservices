@@ -1,0 +1,65 @@
+version: "3.9"
+services:
+
+  gateway_api:
+    image: {{ registry_host }}:5001/rest_finder/gateway_api
+    container_name: gateway_api
+    ports:
+      - "8080:8080"
+    environment:
+      SERVICE_USERS_HOST: http://user:8081
+      SERVICE_RESTAURANTS_HOST: http://restaurant:8082
+      SERVICE_RATING_HOST: http://rating:8083
+      BOT_TOKEN: {{ bot.secret.token}}
+
+  dbservice:
+    image: {{ registry_host }}:5001/rest_finder/dbservice
+    container_name: db_service
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+
+  user:
+    image: {{ registry_host }}:5001/rest_finder/user
+    container_name: user_service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - dbservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/users
+      SPRING_DATASOURCE_USERNAME: {{ db.secret.users_user}}
+      SPRING_DATASOURCE_PASSWORD: {{ db.secret.users_user_pwd }}
+
+  restaurant:
+    image: {{ registry_host }}:5001/rest_finder/restaurant
+    container_name: restaurant_service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - dbservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/restaurants
+      SPRING_DATASOURCE_USERNAME: {{ db.secret.restaurants_user}}
+      SPRING_DATASOURCE_PASSWORD: {{ db.secret.restaurants_user_pwd }}
+
+  rating:
+    image: {{ registry_host }}:5001/rest_finder/rating
+    container_name: rating_service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - dbservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dbservice:5432/comments
+      SPRING_DATASOURCE_USERNAME: {{ db.secret.rating_user}}
+      SPRING_DATASOURCE_PASSWORD: {{ db.secret.rating_user_pwd }}
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
