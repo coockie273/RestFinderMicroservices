@@ -37,6 +37,11 @@
         src: "{{ compose_file }}"
         dest: "{{ compose_file | regex_replace('j2$', 'yaml') }}"
 
+    - name: Modify sql init file from template
+      ansible.builtin.template:
+        src: "{{ daemon_conf }}"
+        dest: "{{ daemon_conf | regex_replace('j2$', 'json') }}"
+
 - name: Wait timeout for creating instances
   hosts: localhost
   connection: local
@@ -52,6 +57,7 @@
   become: yes
   vars:
     compose_yaml: "{{ compose_file | regex_replace('j2$', 'yaml') }}"
+    daemon_json: "{{ daemon_conf | regex_replace('j2$', 'json') }}"
   tasks:
     - name: Update apt package cache
       apt:
@@ -81,6 +87,11 @@
       apt:
         name: docker-compose
         state: present
+
+    - name: Copy directory project
+      copy:
+        src: "{{ daemon_json }}"
+        dest: /etc/docker
 
     - name: Copy directory project
       copy:
