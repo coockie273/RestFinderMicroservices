@@ -5,29 +5,29 @@ services:
     build:
       context: GatewayAPI
       dockerfile: Dockerfile
-    image: localhost:5001/rest_finder/gateway_api
+    image: {{ registry_host }}:5001/rest_finder/gateway_api
     
   dbservice:
     build:
       context: database
       dockerfile: Dockerfile
-    image: localhost:5001/rest_finder/dbservice
+    image: {{ registry_host }}:5001/rest_finder/dbservice
 
   user:
     build:
       context: UserService
       dockerfile: Dockerfile
-    image: localhost:5001/rest_finder/user
+    image: {{ registry_host }}:5001/rest_finder/user
 
   restaurant:
     build:
       context: RestaurantService
       dockerfile: Dockerfile
-    image: localhost:5001/rest_finder/restaurant
+    image: {{ registry_host }}:5001/rest_finder/restaurant
 
   rating:
     build:
       context: RatingService
       dockerfile: Dockerfile
     container_name: rating_service
-    image: localhost:5001/rest_finder/rating
+    image: {{ registry_host }}:5001/rest_finder/rating
