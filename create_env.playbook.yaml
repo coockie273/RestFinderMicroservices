@@ -5,4 +5,8 @@
       ansible.builtin.template:
         src: "{{ sql_init_file }}"
         dest: "{{ sql_init_file | regex_replace('j2$', 'sql') }}"
-        
+
+    - name: Modify sql init file from template
+      ansible.builtin.template:
+        src: "{{ compose_file }}"
+        dest: "{{ compose_file | regex_replace('j2$', 'yaml') }}"
