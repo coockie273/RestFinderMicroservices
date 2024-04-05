@@ -1,6 +1,11 @@
 - name: Modify properties of the db
   hosts: localhost
   tasks:
+    - name: Get db secrets from vault
+      community.hashi_vault.vault_kv2_get:
+        path: db
+      register: db
+      
     - name: Modify sql init file from template
       ansible.builtin.template:
         src: "{{ sql_init_file }}"
