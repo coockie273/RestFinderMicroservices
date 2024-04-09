@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rest-finder
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-finder
+  namespace: rest-finder
+spec:
+  selector:
+    matchLabels:
+      app: rest-finder
+  template:
+    metadata:
+      labels:
+        app: rest-finder
+    spec:
+      containers:
+        - name: gateway-api
+          image: {{ registry_host }}/rest_finder/gateway_api
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVICE_USERS_HOST
+              value: "http://user:8081"
+            - name: SERVICE_RESTAURANTS_HOST
+              value: "http://restaurant:8082"
+            - name: SERVICE_RATING_HOST
+              value: "http://rating:8083"
+            - name: BOT_TOKEN
+              value: {{ bot.secret.token}}
+        - name: dbservice
+          image: {{ registry_host }}/rest_finder/dbservice
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "postgres"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+        - name: user
+          image: {{ registry_host }}/rest_finder/user
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://dbservice:5432/users"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{ db.secret.users_user}}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{ db.secret.users_user_pwd }}
+        - name: restaurant
+          image: {{ registry_host }}/rest_finder/restaurant
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://dbservice:5432/restaurants"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{ db.secret.restaurants_user}}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{ db.secret.restaurants_user_pwd }}
+        - name: rating
+          image: {{ registry_host }}/rest_finder/rating
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://dbservice:5432/comments"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{ db.secret.rating_user}}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{ db.secret.rating_user_pwd }}
+        - name: redis
+          image: redis:latest
+          ports:
+            - containerPort: 6379
