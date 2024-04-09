@@ -6,6 +6,11 @@
         path: db
       register: db
 
+    - name: Get db secrets from vault
+      community.hashi_vault.vault_kv2_get:
+        path: bot
+      register: bot
+
     - name: Modify compose file from template
       ansible.builtin.template:
         src: "{{ deployment_file }}"
