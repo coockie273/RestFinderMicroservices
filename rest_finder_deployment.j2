@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: gateway-api
-          image: {{ registry_host }}/rest_finder/gateway_api
+          image: {{ registry }}:gateway_api
           ports:
             - containerPort: 8080
           env:
@@ -32,7 +32,7 @@ spec:
             - name: BOT_TOKEN
               value: {{ bot.secret.token}}
         - name: dbservice
-          image: {{ registry_host }}/rest_finder/dbservice
+          image: {{ registry }}:dbservice
           ports:
             - containerPort: 5432
           env:
@@ -43,7 +43,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: "postgres"
         - name: user
-          image: {{ registry_host }}/rest_finder/user
+          image: {{ registry }}:user
           ports:
             - containerPort: 8081
           env:
@@ -54,7 +54,7 @@ spec:
             - name: SPRING_DATASOURCE_PASSWORD
               value: {{ db.secret.users_user_pwd }}
         - name: restaurant
-          image: {{ registry_host }}/rest_finder/restaurant
+          image: {{ registry }}:restaurant
           ports:
             - containerPort: 8082
           env:
@@ -65,7 +65,7 @@ spec:
             - name: SPRING_DATASOURCE_PASSWORD
               value: {{ db.secret.restaurants_user_pwd }}
         - name: rating
-          image: {{ registry_host }}/rest_finder/rating
+          image: {{ registry }}:rating
           ports:
             - containerPort: 8083
           env:
