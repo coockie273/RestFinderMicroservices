@@ -5,28 +5,28 @@ services:
     build:
       context: GatewayAPI
       dockerfile: Dockerfile
-    image: {{ registry }}:gateway_api
+    image: {{ registry }}gateway_api
     
   dbservice:
     build:
       context: database
       dockerfile: Dockerfile
-    image: {{ registry }}:dbservice
+    image: {{ registry }}dbservice
 
   user:
     build:
       context: UserService
       dockerfile: Dockerfile
-    image: {{ registry }}:user
+    image: {{ registry }}user
 
   restaurant:
     build:
       context: RestaurantService
       dockerfile: Dockerfile
-    image: {{ registry }}:restaurant
+    image: {{ registry }}restaurant
 
   rating:
     build:
       context: RatingService
       dockerfile: Dockerfile
-    image: {{{ registry }}:rating
+    image: {{{ registry }}rating
