@@ -11,8 +11,7 @@
         path: bot
       register: bot
 
-    - name: Modify compose file from template
+    - name: Modify deployment file from template
       ansible.builtin.template:
         src: "{{ deployment_file }}"
         dest: "{{ deployment_file | regex_replace('j2$', 'yaml') }}"
-
